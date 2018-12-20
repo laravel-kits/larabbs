@@ -8363,6 +8363,22 @@ body {
   margin-bottom: 60px;
 }
 
+/* User register page */
+
+.register-page img.captcha {
+  margin-bottom: 0;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* User login page */
+
+.login-page img.captcha {
+  margin-bottom: 0;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -8370,7 +8386,6 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #000;
-  /* User register page */
 }
 
 .footer .container {
@@ -8385,11 +8400,5 @@ body {
 
 .footer .container p a {
   color: inherit;
-}
-
-.footer .register-page img.captcha {
-  margin-bottom: 0;
-  margin-top: 10px;
-  cursor: pointer;
 }
 
