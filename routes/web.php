@@ -28,3 +28,14 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/email_verify_notice', 'PagesController@emailVerifyNotice')->name('email_verify_notice');
+    // 开始
+    Route::group(['middleware' => 'email_verified'], function () {
+        Route::get('/test', function () {
+            return 'Your email is verified';
+        });
+    });
+    // 结束
+});
