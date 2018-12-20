@@ -51,4 +51,13 @@ body {
       }
     }
   }
+
+  /* User register page */
+  .register-page {
+    img.captcha {
+      margin-bottom: 0;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  }
 }
