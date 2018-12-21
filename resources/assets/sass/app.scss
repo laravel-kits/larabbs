@@ -30,6 +30,15 @@ body {
   margin-bottom: 60px;
 }
 
+/* User profile page */
+.users-show-page {
+  .user-info {
+    .thumbnail {
+      margin-bottom: 0;
+    }
+  }
+}
+
 /* User register page */
 .register-page {
   img.captcha {
