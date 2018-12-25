@@ -27,6 +27,5 @@ class TopicsTableSeeder extends Seeder
         // 将数据集合转换为数组，并插入到数据库中
         Topic::query()->insert($topics->toArray());
     }
-
 }
 
