@@ -38,8 +38,8 @@ class UsersTableSeeder extends Seeder
         User::query()->insert($user_array);
         // 单独处理第一个用户的数据
         $user = User::query()->find(1);
-        $user->name = "Summer";
-        $user->email = 'summer@learnku.com';
+        $user->name = "无痕";
+        $user->email = '826739558@qq.com';
         $user->avatar = 'https://iocaffcdn.phphub.org/uploads/images/201710/14/1/ZqM7iaP4CR.png?imageView2/1/w/200/h/200';
         $user->save();
     }
