@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
+	{
+		\App\Models\User::observe(\App\Observers\UserObserver::class);
+		\App\Models\Topic::observe(\App\Observers\TopicObserver::class);
+
         Schema::defaultStringLength(191); //Solved by increasing StringLength
         \Carbon\Carbon::setLocale('zh'); //Carbon 进行本地化的设置很简单
     }
