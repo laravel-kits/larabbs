@@ -72,6 +72,8 @@
         $(document).ready(function () {
             var editor = new Simditor({
                 textarea: $('#editor'),
+                // 需要使用绝对路径 否则会跑到当前路由下面topics `topics/uploads/images/simditor/image.png`
+                defaultImage : '/uploads/images/simditor/image.png'
             });
         });
     </script>
