@@ -28,9 +28,9 @@ class TopicsController extends Controller
         return view('topics.show', compact('topic'));
     }
 
-    public function create(Topic $topic)
+    public function create(Topic $topic, Category $category)
     {
-        $categories = Category::all();
+        $categories = $category->categories();
         return view('topics.create_and_edit', compact('topic', 'categories'));
     }
 
@@ -42,10 +42,11 @@ class TopicsController extends Controller
         return redirect()->route('topics.show', $topic->id)->with('success', '成功创建主题！');
     }
 
-    public function edit(Topic $topic)
+    public function edit(Topic $topic, Category $category)
     {
         $this->authorize('update', $topic);
-        return view('topics.create_and_edit', compact('topic'));
+        $categories = $category->categories();
+        return view('topics.create_and_edit', compact('topic', 'categories'));
     }
 
     public function update(TopicRequest $request, Topic $topic)
