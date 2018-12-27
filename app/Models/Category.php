@@ -16,7 +16,7 @@ class Category extends Model
     public function categories()
     {
         if (is_null(Cache::get($this->cache_key))) {
-            Cache::set($this->cache_key, static::all(), $this->cache_time);
+            Cache::set($this->cache_key, self::all(), $this->cache_time);
         }
         return Cache::get($this->cache_key);
     }
