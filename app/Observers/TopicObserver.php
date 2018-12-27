@@ -19,7 +19,12 @@ class TopicObserver
         $topic->excerpt = make_excerpt($topic->body);
         // 如 slug 字段无内容，即使用翻译器对 title 进行翻译
         if (!$topic->slug) {
-            $topic->slug = app(SlugTranslateHandler::class)->translate($topic->title);;
+            $topic->slug = app(SlugTranslateHandler::class)->translate($topic->title);
+            // 修复edit或者编辑的时候会跑到路由后面的问题
+            // @url https://laravel-china.org/topics/14584/slug-has-bug?#reply76507
+            if (trim($topic->slug) === 'edit') {
+                $topic->slug = 'edit-slug';
+            }
         }
     }
 }
