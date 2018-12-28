@@ -23,4 +23,7 @@
 @endif
 
 {{-- 分页 --}}
-{!! $replies->appends(Request::except('page'))->render() !!}
+{{--{!! $replies->appends(Request::except('page'))->render() !!}--}}
+{{--https://laravel-china.org/topics/8727/another-way-of-writing-pagination--}}
+{{--https://laravel-china.org/topics/16642?#reply76627--}}
+{{$replies->appends(['tab'=>'replies'])->links()}}
