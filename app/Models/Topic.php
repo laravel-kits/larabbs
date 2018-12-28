@@ -4,6 +4,8 @@ namespace App\Models;
 
 class Topic extends Model
 {
+    const TTL = 30; // 30秒内不能重复发布话题
+
     protected $fillable = ['title', 'body', 'category_id', 'excerpt', 'slug'];
 
     public function category()

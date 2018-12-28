@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Handles\SlugTranslateHandler;
 use App\Jobs\TranslateSlug;
 use App\Models\Topic;
+use App\Models\TimeOuts;
 
 // creating, created, updating, updated, saving,
 // saved,  deleting, deleted, restoring, restored
@@ -24,6 +24,11 @@ class TopicObserver
     // 确保了我们在分发任务时，$topic->id 永远有值。
     public function saved(Topic $topic)
     {
+        // 添加话题时间间隔
+        $key = 'topic_create_' . \Auth::id();
+        if (!app(TimeOuts::class)->get($key)) {
+            TimeOuts::put($key, Topic::TTL);
+        }
         // 如 slug 字段无内容，即使用翻译器对 title 进行翻译 isDirty判断是都是更新数据
         if (!$topic->slug || $topic->isDirty()) {
             // 推送任务到队列

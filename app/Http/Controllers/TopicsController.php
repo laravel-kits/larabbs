@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
 use Auth;
+use App\Models\TimeOuts;
 
 class TopicsController extends Controller
 {
@@ -39,8 +40,24 @@ class TopicsController extends Controller
         return view('topics.create_and_edit', compact('topic', 'categories'));
     }
 
-    public function store(TopicRequest $request, Topic $topic)
+    public function store(TopicRequest $request, Topic $topic, TimeOuts $timeOuts)
     {
+        // 获取最后发布的话题
+        $lastTopic = Topic::query()
+            ->where(['user_id' => Auth::id()])
+            ->where(['category_id' => $request->category_id])
+            ->orderBy('created_at', 'desc')
+            ->first();
+        // 检查频率
+        $key = 'topic_create_' . \Auth::id();
+        if ($timeOuts->get($key)) {
+            return redirect()->to($topic->link())->with('danger', '你发帖时间过短！');
+        }
+        // 检查雷同
+        similar_text($lastTopic->title, $request->title, $percent);
+        if ($percent > 80) {
+            return redirect()->to($topic->link())->with('danger', '请勿重复发布雷同内容！');
+        }
         $topic->fill($request->all());
         $topic->user_id = Auth::id();
         $topic->save();
