@@ -11,6 +11,9 @@ class ReplyObserver
 {
     public function created(Reply $reply)
     {
+        // \DB::enableQueryLog();
+        // $reply->topic->increment('reply_count', 1);
+        // dd(\DB::getQueryLog());
         $reply->topic()->increment('reply_count', 1);
     }
 }
