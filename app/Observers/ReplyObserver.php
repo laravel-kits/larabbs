@@ -15,6 +15,7 @@ class ReplyObserver
         // \DB::enableQueryLog();
         // $reply->topic->increment('reply_count', 1);
         // dd(\DB::getQueryLog());
+        // =@ https://laravel-china.org/topics/18759
         $topic = $reply->topic;
         $topic->increment('reply_count', 1);
         // 通知作者话题被回复了
