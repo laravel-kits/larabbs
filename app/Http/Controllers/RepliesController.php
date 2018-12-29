@@ -11,50 +11,24 @@ class RepliesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth');
     }
 
-	public function index()
-	{
-		$replies = Reply::paginate();
-		return view('replies.index', compact('replies'));
-	}
-
-    public function show(Reply $reply)
+    public function store(ReplyRequest $request, Reply $reply)
     {
-        return view('replies.show', compact('reply'));
+        $reply->content = $request->content;
+        $reply->user_id = \Auth::id();
+        $reply->topic_id = $request->topic_id;
+        $reply->save();
+        // 访问控制器中的方法除了在路由文件定义路由之外，还可以使用to()这种方式
+        return redirect()->to($reply->topic->link())->with('success', '创建成功！');
     }
 
-	public function create(Reply $reply)
-	{
-		return view('replies.create_and_edit', compact('reply'));
-	}
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('destroy', $reply);
+        $reply->delete();
 
-	public function store(ReplyRequest $request)
-	{
-		$reply = Reply::create($request->all());
-		return redirect()->route('replies.show', $reply->id)->with('message', 'Created successfully.');
-	}
-
-	public function edit(Reply $reply)
-	{
-        $this->authorize('update', $reply);
-		return view('replies.create_and_edit', compact('reply'));
-	}
-
-	public function update(ReplyRequest $request, Reply $reply)
-	{
-		$this->authorize('update', $reply);
-		$reply->update($request->all());
-
-		return redirect()->route('replies.show', $reply->id)->with('message', 'Updated successfully.');
-	}
-
-	public function destroy(Reply $reply)
-	{
-		$this->authorize('destroy', $reply);
-		$reply->delete();
-
-		return redirect()->route('replies.index')->with('message', 'Deleted successfully.');
-	}
+        return redirect()->route('replies.index')->with('success', '删除成功！');
+    }
 }
