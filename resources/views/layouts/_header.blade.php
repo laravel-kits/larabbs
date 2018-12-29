@@ -40,7 +40,7 @@
                     <li>
                         <a href="{{route('notifications.index')}}" class="notifications-badge" style="margin-top: -2px;">
                             <span class="badge badge-{{Auth::user()->notification_count>0?'hint':'fade'}}" title="消息提醒">
-                                {{Auth::user()->notification_count}}
+                                <span id="notification_count">{{Auth::user()->notification_count}}</span>
                             </span>
                         </a>
                     </li>
@@ -70,7 +70,7 @@
                                 <a href="{{route('logout')}}"
                                    onclick="event.preventDefault();
                                       document.getElementById('logout-form').submit()">
-                                    <span class="glyphicon glyphicon-log-out">
+                                    <span class="glyphicon glyphicon-log-out"></span>
                                     退出登录
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         {{ csrf_field() }}
@@ -84,3 +84,18 @@
         </div>
     </div>
 </nav>
+<script type="application/javascript">
+    // ajax 轮训获取数据 https://www.cnblogs.com/YangJieCheng/p/8367586.html
+    var getting = {
+        url: '/pages/notification_count',
+        dataType: 'json',
+        success: function (res) {
+            console.log(res);
+            $('#notification_count').text(res.notification_count);
+        }
+    };
+    // 关键在这里，Ajax定时访问服务端，不断获取数据 ，这里是15秒请求一次。
+    window.setInterval(function () {
+        $.ajax(getting)
+    }, 1000 * 15)
+</script>

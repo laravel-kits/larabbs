@@ -31,7 +31,6 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::resource('users', 'UsersController', ['only' => ['show', 'update', 'edit']]);
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/email_verify_notice', 'PagesController@emailVerifyNotice')->name('email_verify_notice');
     // 开始
     Route::get('/email_verify_notice', 'PagesController@emailVerifyNotice')
         ->name('email_verify_notice');
@@ -49,3 +48,4 @@ Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
 Route::post('upload_image', 'TopicsController@uploadImage')->name('topics.upload_image');
 Route::resource('replies', 'RepliesController', ['only' => ['store', 'destroy']]);
 Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
+Route::get('pages/notification_count', 'PagesController@notificationCount')->name('pages.notification_count');
