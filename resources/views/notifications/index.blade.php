@@ -6,7 +6,7 @@
     <div class="container">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-default">
+                <div class="panel-body">
                     <h3 class="text-center">
                         <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
                         我的通知
