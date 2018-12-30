@@ -13,11 +13,11 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-	{
-	    // 注册观察者
-		\App\Models\User::observe(\App\Observers\UserObserver::class);
-		\App\Models\Reply::observe(\App\Observers\ReplyObserver::class);
-		\App\Models\Topic::observe(\App\Observers\TopicObserver::class);
+    {
+        // 注册观察者
+        \App\Models\User::observe(\App\Observers\UserObserver::class);
+        \App\Models\Reply::observe(\App\Observers\ReplyObserver::class);
+        \App\Models\Topic::observe(\App\Observers\TopicObserver::class);
 
         Schema::defaultStringLength(191); //Solved by increasing StringLength
         \Carbon\Carbon::setLocale('zh'); //Carbon 进行本地化的设置很简单
@@ -32,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
+        if (app()->isLocal()) {
+            $this->app->register(\VIACreative\SudoSu\ServiceProvider::class);
         }
     }
 }
