@@ -33,4 +33,6 @@
             </div>
         </div>
     @endforeach
+    {{--https://laravel-china.org/topics/8779/using-the-can-tag-to-judge-whether-the-permission-to-delete-a-reply-will-lead-to-a-n1-problem-is-there-a-better-way-to-do-it--}}
+    {!! $replies->appends(Request::except('page'))->render() !!}
 </div>
