@@ -11,11 +11,8 @@ class CategoryObserver
     {
         \Cache::forget($category->cache_key);
         // 删除后所有帖子转移到普通分类5
-        $topics = \DB::table('topics')->where('category_id', $category->id)->get();
-        foreach ($topics as $topic) {
-            \DB::table('topics')->where('category_id', $topic->category_id)->update(
-                ['category_id' => 5]
-            );
-        }
+        \DB::table('topics')->where('category_id', $category->id)->update(
+            ['category_id' => 5]
+        );
     }
 }
