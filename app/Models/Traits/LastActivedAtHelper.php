@@ -35,6 +35,8 @@ trait LastActivedAtHelper
             $user_id = str_replace($this->field_prefix, '', $user_id);
             // 只有当用户存在时才更新到数据库
             if ($user = $this->find($user_id)) {
+                // @url https://laravel-china.org/topics/18412
+                $user->timestamps = false;
                 $user->last_actived_at = $actived_at;
                 $user->save();
             }
