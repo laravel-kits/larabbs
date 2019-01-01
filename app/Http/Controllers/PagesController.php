@@ -18,16 +18,18 @@ class PagesController extends Controller
 
     public function notificationCount()
     {
-        $notification_count = \Auth::user()->notification_count;
-        if ($notification_count > 0) {
-            return [
-                'success' => '存在数据',
-                'notification_count' => $notification_count,
-            ];
-        } else {
-            return [
-                'failed' => '不存在数据',
-            ];
+        if (\Auth::check()) {
+            $notification_count = \Auth::user()->notification_count;
+            if ($notification_count > 0) {
+                return [
+                    'success' => '存在数据',
+                    'notification_count' => $notification_count,
+                ];
+            } else {
+                return [
+                    'failed' => '不存在数据',
+                ];
+            }
         }
     }
 
