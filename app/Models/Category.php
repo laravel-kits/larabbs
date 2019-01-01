@@ -10,7 +10,7 @@ class Category extends Model
     protected $fillable = [
         'name', 'description',
     ];
-    protected $cache_key = 'category_key';
+    public $cache_key = 'category_key';
     protected $cache_time = 30; // 30分钟
 
     public function categories()

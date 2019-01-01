@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\Reply::observe(\App\Observers\ReplyObserver::class);
         \App\Models\Topic::observe(\App\Observers\TopicObserver::class);
         \App\Models\Link::observe(\App\Observers\LinkObserver::class);
+        \App\Models\Category::observe(\App\Observers\CategoryObserver::class);
 
         Schema::defaultStringLength(191); //Solved by increasing StringLength
         \Carbon\Carbon::setLocale('zh'); //Carbon 进行本地化的设置
