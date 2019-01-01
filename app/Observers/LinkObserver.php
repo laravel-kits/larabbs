@@ -11,4 +11,10 @@ class LinkObserver
     {
         \Cache::forget($link->cache_key);
     }
+
+    // @url https://laravel-china.org/topics/18396?#reply76900
+    public function deleted(Link $link)
+    {
+        \Cache::forget($link->cache_key);
+    }
 }
