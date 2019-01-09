@@ -15,4 +15,17 @@ class Reply extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * php截取指定两个字符之间字符串
+     * @param $input
+     * @param $start
+     * @param $end
+     * @return bool|string
+     */
+    public function get_between($input, $start, $end)
+    {
+        $substr = substr($input, strlen($start) + strpos($input, $start), (strlen($input) - strpos($input, $end)) * (-1));
+        return $substr;
+    }
 }

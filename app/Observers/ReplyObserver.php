@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Reply;
 use App\Notifications\TopicReplied;
+use App\Models\User;
 
 // creating, created, updating, updated, saving,
 // saved,  deleting, deleted, restoring, restored
@@ -25,5 +26,14 @@ class ReplyObserver
     public function deleted(Reply $reply)
     {
         $reply->topic->decrement('reply_count', 1);
+    }
+
+    public function saving(Reply $reply)
+    {
+        // fixme只能@一个用户
+        $username = $reply->get_between($reply->content, '@', ' ');
+        $uid = User::query()->where('name', $username)->pluck('id')->toArray();
+        $replace = "<a style='color:blue;text-decoration:none' href='/users/" . $uid[0] . "' title='" . "$username'>@" . $username . "</a>";
+        $reply->content = str_replace('@' . $username, $replace, $reply->content);
     }
 }
