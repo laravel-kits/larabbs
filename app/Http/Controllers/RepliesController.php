@@ -22,11 +22,6 @@ class RepliesController extends Controller
         if (empty($content)) {
             return redirect()->back()->with('danger', '回复内容错误！');
         }
-        // fixme只能@一个用户
-        $username = $this->get_between($content, '@', ' ');
-        $uid = User::query()->where('name', $username)->pluck('id')->toArray();
-        $replace = "<a style='color:blue' href='/users/" . $uid[0] . "' title='" . "$username'>@" . $username . "</a>";
-        $content = str_replace('@' . $username, $replace, $content);
         $reply->content = $content;
         $reply->user_id = \Auth::id();
         $reply->topic_id = $request->topic_id;
@@ -50,18 +45,5 @@ class RepliesController extends Controller
         $users = User::query()->where('name', 'like', $name . '%')->pluck('name');
         // laravel集合可以当做数组用，laravel默认返回的是json响应
         return $users;
-    }
-
-    /**
-     * php截取指定两个字符之间字符串
-     * @param $input
-     * @param $start
-     * @param $end
-     * @return bool|string
-     */
-    public function get_between($input, $start, $end)
-    {
-        $substr = substr($input, strlen($start) + strpos($input, $start), (strlen($input) - strpos($input, $end)) * (-1));
-        return $substr;
     }
 }
